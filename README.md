@@ -1,7 +1,7 @@
-# Cocos Creator 插件：快速生成图片动画
+# 快速生成图片动画
 
 #### 介绍
-Cocos Creator 插件 - 快速生成只有 SpriteFrame 属性的 AnimationClip
+Cocos Creator 编辑器插件 - 快速生成只有 SpriteFrame 属性的 AnimationClip
 
 #### 支持版本
 
