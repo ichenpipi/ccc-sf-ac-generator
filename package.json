@@ -1,0 +1,20 @@
+{
+  "name": "ccc-sf-ac-generator",
+  "version": "0.0.1",
+  "description": "快速生成只有图片的动画",
+  "author": "ifaswind",
+  "main": "main.js",
+  "main-menu": {
+    "扩展/快速生成图片动画": {
+      "message": "ccc-sf-ac-generator:open-panel"
+    }
+  },
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "快速生成图片动画",
+    "width": 500,
+    "height": 600
+  },
+  "scene-script": "scene.js"
+}
