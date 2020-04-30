@@ -3,15 +3,16 @@ let Path = require('path');
 
 module.exports = {
 
-  load() { },
-
-  unload() { },
-
   templateUrl: 'packages://ccc-sf-ac-generator/res/template.anim', // 模板路径
   templateString: '', // 模板字符串
   importUuids: [], // 当前导入的图片资源 uuid
 
+  load() { },
+
+  unload() { },
+
   messages: {
+
     // 打开面板
     'open-panel'() {
       Editor.log('[SPACG] 图片动画生成器');
@@ -59,7 +60,8 @@ module.exports = {
       else Editor.warn('[SPACG] 请先导入图片！');
       this.importUuids = [];
       event.reply(null, true);
-    },
+    }
+
   },
 
   // 获取目标路径的图片资源 uuid

@@ -1,6 +1,6 @@
 {
   "name": "ccc-sf-ac-generator",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "快速生成只有图片的动画",
   "author": "ifaswind",
   "main": "main.js",

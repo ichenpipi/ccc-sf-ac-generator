@@ -160,8 +160,10 @@ Editor.Panel.extend({
             this.amount = 0;
           });
         },
-      },
+
+      }
 
     });
-  },
+  }
+
 });
