@@ -1,15 +1,15 @@
 let Fs = require('fs');
 let Path = require('path');
 
+let templateUrl = 'packages://ccc-sf-ac-generator/res/template.anim'; // 模板路径
+let templateString = ''; // 模板字符串
+let importUuids = []; // 当前导入的图片资源 uuid
+
 module.exports = {
 
-  templateUrl: 'packages://ccc-sf-ac-generator/res/template.anim', // 模板路径
-  templateString: '', // 模板字符串
-  importUuids: [], // 当前导入的图片资源 uuid
+  // load() { },
 
-  load() { },
-
-  unload() { },
+  // unload() { },
 
   messages: {
 
@@ -22,49 +22,53 @@ module.exports = {
     // 导入目标路径的图片
     'import-path'(event, config) {
       Editor.log('[SPACG] 导入目标路径图片...');
-      this.importUuids = [];
+      importUuids = [];
       let path = Editor.url('db://assets/' + config.inputPath, 'utf8');
       if (Fs.existsSync(path)) {
-        this.importUuids = this.getUuidsViaPath(path, config.prefix);
-        Editor.log('[SPACG] 导入共 ' + this.importUuids.length + ' 张图片');
+        importUuids = this.getUuidsViaPath(path, config.prefix);
+        Editor.log('[SPACG] 导入共 ' + importUuids.length + ' 张图片');
       } else {
         Editor.warn('[SPACG] 指定目录不存在！');
       }
-      event.reply(null, this.importUuids.length);
+      event.reply(null, importUuids.length);
     },
 
     // 导入当前选中的图片
     'import-selection'(event) {
       Editor.log('[SPACG] 导入当前选中图片...');
-      this.importUuids = [];
+      importUuids = [];
       let uuids = Editor.Selection.curSelection('asset');
       if (uuids.length > 0) {
-        this.importUuids = this.getUuidsViaCurSelection(uuids);
-        Editor.log('[SPACG] 共导入 ' + this.importUuids.length + ' 张图片');
+        importUuids = this.getUuidsViaCurSelection(uuids);
+        Editor.log('[SPACG] 共导入 ' + importUuids.length + ' 张图片');
       } else {
         Editor.warn('[SPACG] 当前未选中图片！');
       }
-      event.reply(null, this.importUuids.length);
+      event.reply(null, importUuids.length);
     },
 
     // 清除当前导入的图片
     'clear-import'(event) {
       Editor.log('[SPACG] 已清空导入！');
-      this.importUuids = [];
-      event.reply(null, this.importUuids.length);
+      importUuids = [];
+      event.reply(null, importUuids.length);
     },
 
     // 生成
     async 'generate'(event, config) {
-      if (this.importUuids.length > 0) await this.generateAnimFile(this.importUuids, config);
+      if (importUuids.length > 0) await this.generateAnimFile(importUuids, config);
       else Editor.warn('[SPACG] 请先导入图片！');
-      this.importUuids = [];
+      importUuids = [];
       event.reply(null, true);
     }
 
   },
 
-  // 获取目标路径的图片资源 uuid
+  /**
+   * 获取目标路径的图片资源 uuid
+   * @param {*} dirPath 路径
+   * @param {*} prefix 文件前缀
+   */
   getUuidsViaPath(dirPath, prefix) {
     let uuids = [];
     let list = '[SPACG] 图片列表 >>>';
@@ -86,7 +90,10 @@ module.exports = {
     return uuids;
   },
 
-  // 获取当前选中的图片资源 uuid
+  /**
+   * 获取当前选中的图片资源 uuid
+   * @param {*} curSelection 当前选中的 uuid
+   */
   getUuidsViaCurSelection(curSelection) {
     let uuids = [];
     let list = '[SPACG] 图片列表 >>>';
@@ -106,12 +113,12 @@ module.exports = {
     return uuids;
   },
 
-  // 获取模板
+  /**
+   * 获取模板
+   */
   getTemplate() {
-    if (!this.templateString) {
-      this.templateString = Fs.readFileSync(Editor.url(this.templateUrl));
-    }
-    return JSON.parse(this.templateString);
+    if (!templateString) templateString = Fs.readFileSync(Editor.url(templateUrl));
+    return JSON.parse(templateString);
   },
 
   // 生成动画文件

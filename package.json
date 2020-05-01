@@ -2,7 +2,7 @@
   "name": "ccc-sf-ac-generator",
   "version": "1.0.0",
   "description": "快速生成只有图片的动画",
-  "author": "ifaswind",
+  "author": "文弱书生陈皮皮",
   "main": "main.js",
   "main-menu": {
     "扩展/快速生成图片动画": {
